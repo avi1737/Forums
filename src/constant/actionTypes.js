@@ -1,0 +1,5 @@
+export const SET_LOGIN_FLAG = "SET_LOGIN_FLAG";
+export const SET_USER_DATA = "SET_USER_DATA";
+export const SET_USER_AUTHTOKEN = "SET_USER_AUTHTOKEN";
+export const SET_ROUTE_NAME = "SET_ROUTE_NAME";
+export const CLEAR_AUTH = "CLEAR_AUTH";
