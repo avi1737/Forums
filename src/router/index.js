@@ -1,11 +1,8 @@
 import { Route, Switch } from "react-router-dom";
-import { ProtectedRoute } from "../components/Hoc/ProtectedRoute";
 
 const Router = () => {
   return (
-    <Switch>
-
-    </Switch>
+    <h1>Boss</h1>
   );
 };
 
