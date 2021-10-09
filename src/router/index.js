@@ -1,7 +1,17 @@
+import { Switch , Route , BrowserRouter} from "react-router-dom";
+import Login from "../pages/account/Login";
+import Register from "../pages/account/Register";
+import TaskPage from "../pages/account/TaskPage";
 
 const Router = () => {
   return (
-    <h1>Boss</h1>
+    <BrowserRouter>
+     <Switch>
+       <Route exact path = "/Login" component = {Login} />
+       <Route exact path = "/Register" component = {Register} />
+       <Route exact path = "/task" component = {TaskPage}/>
+     </Switch>
+    </BrowserRouter>
   );
 };
 
