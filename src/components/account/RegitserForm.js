@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link , useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { setUserData } from "../../actions/auth";
 import { callSignup } from "../../Graphs/Auth/SignUp";
 import { validateEmail, validateInputs } from "../../utils/authHelper";
 import { Head , Card  , Input} from "./LoginForm";
+import { toast } from 'react-toastify';
 
 
 const SignUpButton = styled.input.attrs(props => ({
@@ -38,18 +42,27 @@ const ErrorMessage = styled.p`
 
 export default function RegisterForm() {
 
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [buttontext , setButtonText] = useState('Sign Up');
     const [buttonStatus , setButtonStatus] = useState(true);
+    const isAuthenticated = useSelector((state) => state.loginReducer.token);
     const [errors, setError] = useState({
       email : {
         show : false,
         message : ""
       }
     })
+
+    useEffect(() => {
+      if(isAuthenticated){
+        history.push(`${process.env.PUBLIC_URL}/Feed`);
+      }
+    },[isAuthenticated,history]);
 
     function validateEmails(){
       let isValid = validateEmail(email);
@@ -75,7 +88,6 @@ export default function RegisterForm() {
 
     function validate(status){
       let validate = validateInputs(firstName,lastName,email,status);
-      console.log(validate);
       if(validate){
         setButtonStatus(false);
       }
@@ -89,10 +101,12 @@ export default function RegisterForm() {
         setButtonText('Signing up...');
         const signUpData = await callSignup(email,password,firstName,lastName);
         if(signUpData.status === 200){
-       
+          dispatch(setUserData(signUpData.user));
+          toast(signUpData.message);
+          history.push(`${process.env.PUBLIC_URL}/Login`);
         }
         else if(signUpData.status === 500){
-          
+          toast(signUpData.message);
         }
       }
       catch(e){

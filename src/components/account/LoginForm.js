@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link , useHistory} from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components'
 import { clearAuth, setLoginFlag, setUserAuthtoken, setUserData } from '../../actions/auth';
 import { callLogin } from '../../Graphs/Auth/Login';
+import { validateEmail } from '../../utils/authHelper';
 
 export const Head = styled.div`
     background-color : #161B22;
@@ -50,6 +53,9 @@ const SignInButton = styled.input.attrs(props => ({
     &:active {
       background-color: #238200;
     }
+    :disabled {
+      opacity: 0.5;
+    }
 `;
 
 export const Input = styled.input`
@@ -62,7 +68,7 @@ export const Input = styled.input`
     border-radius: 4px;
     text-align: left;
     background-color: #0D1117;
-    color : white
+    color : white;
 `;
 
 export default function LoginForm() {
@@ -72,6 +78,8 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [buttontext , setButtonText] = useState('Sign in');
+    const [buttonStatus, setButtonStatus] = useState(true);
+    const isAuthenticated = useSelector((state) => state.loginReducer.token);
 
     async function handleLogin(){
       try{
@@ -81,13 +89,12 @@ export default function LoginForm() {
           dispatch(setUserData(loginData.user));
           dispatch(setLoginFlag(true));
           dispatch(setUserAuthtoken(loginData.authToken));
-
-          history.push(`${process.env.PUBLIC_URL}/dashboard`);
+          history.push(`${process.env.PUBLIC_URL}/Feed`);
         }
         else if(loginData.status === 500){
           dispatch(clearAuth());
           setButtonText('Sign in');
-          alert(loginData.message);
+          toast.error(loginData.message);
         }
       }
       catch(e){
@@ -95,14 +102,26 @@ export default function LoginForm() {
       }
     }
 
+    function validateInput(){
+      if(email !== '' && validateEmail(email)){
+        setButtonStatus(false);
+      }
+    }
+
+    useEffect(() => {
+      if(isAuthenticated){
+        history.push(`${process.env.PUBLIC_URL}/Feed`);
+      }
+    },[isAuthenticated,history]);
+
     return (
      <>
      <Head>Sign in to TeenagersForum</Head>
      <Card>
          <h3>Login</h3>
-         <Input type="email" placeholder="email" autoFocus onChange = {(e) => setEmail(e.target.value)}/>
+         <Input type="email" placeholder="email" autoFocus onChange = {(e) => setEmail(e.target.value)} onBlur = {validateInput}/>
          <Input type="password" placeholder="password" onChange = {(e) => setPassword(e.target.value)}/>
-         <SignInButton onClick= {() => handleLogin()} text = {buttontext}/>
+         <SignInButton onClick= {() => handleLogin()} text = {buttontext} disabled={buttonStatus}/>
      </Card>
      <Head>Dont have an account ? <Link to ='/Register' style={{color : 'white' , fontWeight: 'bold'}}>Sign up here</Link></Head>
      </>
