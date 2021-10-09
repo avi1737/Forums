@@ -1,21 +1,16 @@
-import { WEBURL } from "../constant/comman";
+import { API_URL } from "../constant/comman";
 
 export function callApiToServer(body, header, method, endPoint) {
-  console.log(
-    "encryptedString in about to call adminLogin",
-    body,
-    header,
-    method,
-    endPoint
-  );
 
   return new Promise((resolve, reject) => {
-    fetch(WEBURL + endPoint, {
+    fetch(API_URL + endPoint, {
       method: method,
       headers: header,
       body: body,
     })
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
         resolve(data);
       })
@@ -27,10 +22,9 @@ export function callApiToServer(body, header, method, endPoint) {
 }
 
 export function callGetApiToServer(header, method, endPoint) {
-  console.log("in about to call adminLogin", header, method, endPoint);
 
   return new Promise((resolve, reject) => {
-    fetch(WEBURL + endPoint, {
+    fetch(API_URL + endPoint, {
       method: method,
       headers: header,
     })
