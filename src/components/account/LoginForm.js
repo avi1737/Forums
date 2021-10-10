@@ -9,7 +9,7 @@ import { callLogin } from '../../Graphs/Auth/Login';
 import { validateEmail } from '../../utils/authHelper';
 
 export const Head = styled.div`
-    background-color : #161B22;
+    background-color : #4b77be;
     width : 320px;
     height : auto;
     border-radius : 8px;
@@ -23,7 +23,7 @@ export const Head = styled.div`
 `;
 
 export const Card = styled.div`
-    background-color : #161B22;
+    background-color : #3a539b;
     display : flex;
     width : 320px;
     height : auto;
@@ -67,8 +67,7 @@ export const Input = styled.input`
     outline: 0;
     border-radius: 4px;
     text-align: left;
-    background-color: #0D1117;
-    color : white;
+    background-color: #fff;
 `;
 
 export default function LoginForm() {

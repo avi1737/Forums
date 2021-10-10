@@ -102,11 +102,12 @@ export default function RegisterForm() {
         const signUpData = await callSignup(email,password,firstName,lastName);
         if(signUpData.status === 200){
           dispatch(setUserData(signUpData.user));
-          toast(signUpData.message);
+          toast.success(signUpData.message);
           history.push(`${process.env.PUBLIC_URL}/Login`);
+          toast.success('You can log in to your account now.');
         }
         else if(signUpData.status === 500){
-          toast(signUpData.message);
+          toast.error(signUpData.message);
         }
       }
       catch(e){
