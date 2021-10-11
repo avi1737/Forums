@@ -7,6 +7,7 @@ import Router from "./router";
 import store from "./store/index";
 import { Provider } from "react-redux";
 import { ScrollContext } from "react-router-scroll-4";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Root() {
   return (

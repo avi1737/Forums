@@ -2,34 +2,30 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { FaCommentAlt,FaHome, FaUserCircle, FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Container , Row , Col } from 'react-bootstrap';
 
 export const Navigation = styled.div`
     background-color : #3a539b;
     display : flex;
-    width : 100%;
     height : 45px;
     color : white;
     flex-direction : row;
     align-items : center;
-    margin : 0 auto;
-    justify-content : 'space-around'
+    position : 'fixed';
+    top: 0;
+    left : 0;
 `;
 
 const Content = styled.div`
     margin : 0 auto;
-    width : 960px;
+    width : 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items : center;
-
-    @media only screen and (max-width: 728px) {
-        width : 400px;
-        padding : 0 30px;
-    }
 `;
 
-const Brand = styled.h3`
+const Brand = styled.h5`
     color : 'white';
 `;
 
@@ -52,7 +48,11 @@ const MenuItem = styled.div`
 function Navbar(){
     return(
         <Navigation>
-            <Content>
+            <Container>
+            <Row>
+                <Col lg = {1}></Col>
+                <Col lg = {10}>
+                <Content>
             <Brand>TeenagersForum</Brand>
             <Menu>
                 <MenuItem>
@@ -66,7 +66,9 @@ function Navbar(){
                   </Link>
                 </MenuItem>
                 <MenuItem>
+                  <Link to = '/Chats' style={{color : 'white'}}>
                   <FaCommentAlt/>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link to = '/Profile' style={{color : 'white'}}>
@@ -75,6 +77,11 @@ function Navbar(){
                 </MenuItem>
             </Menu>
             </Content>
+                </Col>
+                <Col lg = {1}></Col>
+            </Row>
+            
+            </Container>
         </Navigation>
     )
 }
