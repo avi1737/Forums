@@ -41,7 +41,7 @@ const ProfileImage = styled.img.attrs(props => ({
 function Post(props) {
 
     const [isOpen, setOpen] = useState(false);
-    const {content,commentsCount,likesCount,created_date,id} = props.data;
+    const {content,commentsCount,likesCount,id} = props.data;
 
     function openComments(){
         if(isOpen){

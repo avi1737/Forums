@@ -24,19 +24,19 @@ function CommentList(props) {
     const isLoading = useSelector((state) => state.commentReducer.isLoading);
 
     useEffect(() => {
+        async function fetch_comments(){
+            try{
+                dispatch(fetch_comments_request());
+                const commentData = await callComments(authToken,postId,page);
+                dispatch(fetch_comments_success(commentData.data));
+            }
+            catch(err){
+                dispatch(fetch_comments_error(err));
+            }
+        }
        fetch_comments();
-    },[page]);
+    },[dispatch,page,authToken,postId]);
 
-    async function fetch_comments(){
-        try{
-            dispatch(fetch_comments_request());
-            const commentData = await callComments(authToken,postId,page);
-            dispatch(fetch_comments_success(commentData.data));
-        }
-        catch(err){
-            dispatch(fetch_comments_error(err));
-        }
-    }
 
     return (
         <div>

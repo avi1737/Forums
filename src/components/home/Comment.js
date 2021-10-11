@@ -13,7 +13,7 @@ const CommentContainer = styled.div`
 
 function Comment(props) {
 
-    const {content , created_date} = props.data;
+    const {content } = props.data;
     return (
         <CommentContainer>
             {content}

@@ -13,19 +13,19 @@ function PostList() {
     const isLoading = useSelector((state) => state.postsReducer.isLoading);
 
     useEffect(() => {
-        fetch_posts();
-    },[]);
+        async function fetch_posts(){
+            try{
+                dispatch(fetch_posts_request());
+                const feedData = await callFeeds(authToken);
+                dispatch(fetch_posts_success(feedData.data.posts));
+            }
+            catch(err){
+                dispatch(fetch_posts_error(err));
+            }
+        }
 
-    async function fetch_posts(){
-        try{
-            dispatch(fetch_posts_request());
-            const feedData = await callFeeds(authToken);
-            dispatch(fetch_posts_success(feedData.data.posts));
-        }
-        catch(err){
-            dispatch(fetch_posts_error(err));
-        }
-    }
+        fetch_posts();
+    },[dispatch,authToken]);
 
     return (
         <div>
