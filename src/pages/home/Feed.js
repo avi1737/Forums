@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import PostList from '../../components/home/PostList';
-import ProfileSummary from '../../components/home/ProfileSummary';
 
 function Feed() {
 
