@@ -13,9 +13,6 @@ function Feed() {
         <Container className='mt-4'>
             <Row mt={5}>
                 <Col lg = {1} xs = {0}></Col>
-                <Col lg = {3} sm={12} xs = {11}>
-                    <ProfileSummary/>
-                </Col>
                 <Col lg = {6} sm={10} xs= {11}>
                     <PostList/>
                 </Col>

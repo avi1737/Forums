@@ -12,12 +12,15 @@ const PostContainer = styled.div`
     font-size : 13px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius : 20px 10px 0px 20px;
+    background-color : dodgerblue;
+    color : #fff;
 `;
 
 const PostContent = styled.div`
     width : 100%;
     height : auto;
-    font-size : 13px;
+    font-size : 14px;
+    font-weight : 'bold';
 `;
 
 const CreatorProfile = styled.div`

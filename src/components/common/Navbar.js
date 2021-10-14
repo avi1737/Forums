@@ -1,10 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaCommentAlt,FaHome, FaUbuntu, FaUserCircle, FaUsers } from 'react-icons/fa';
+import { FaCommentAlt,FaHome, FaSignOutAlt, FaUbuntu, FaUsers } from 'react-icons/fa';
 import { MdOutlineDangerous } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { Container , Row , Col} from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { clearAuth } from '../../actions/auth';
+import { toast } from 'react-toastify';
 
 export const Navigation = styled.div`
     background-color : #fff;
@@ -13,7 +16,8 @@ export const Navigation = styled.div`
     flex-direction : row;
     align-items : center;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    position : 'fixed'
+    position : sticky;
+    top : 0;
 `;
 
 const Content = styled.div`
@@ -33,40 +37,53 @@ const Brand = styled.h6`
     padding-right : 20px;
 `;
 
-const Menu = styled.div`
-    color : '#cecece';
-    display : flex ;
-    flex-direction : column;
+const Menu = styled.ul`
+   list-style : none;
+   width : 100%;
 `;
 
-const MenuItem = styled.div`
-    padding-left : 8px;
-    display : flex;
+
+const MenuItem = styled.li`
+    margin : 10px 0px;
     cursor : pointer;
-    display : flex;
-    flex-direction : row;
     color : '#95a5a6';
+    font-size : '18px';
+    text-decoration : none;
+    display : flex;
+    justify-content: space-between;
+    align-items : center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 2px 3px 0px;
+    padding : 0px 20px;
 `;
 
 
 const NavbarContainer = styled.div.attrs(props => ({
   }))`
-    width : 200px;
+    width : 250px;
     height : 100vh;
     background : #fff;
     display : flex;
     flex-direction : column;
     position : fixed;
     top : 0; 
-    right : ${props => (props.isOpen ? "0" : "-200px")};
+    right : ${props => (props.isOpen ? "0" : "-250px")};
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: all 0.5s ease 0s;
     -webkit-transition: all 0.5s ease 0s;
+
 `;
 
 
 
 function NavbarMenu(props){
+
+    const dispatch = useDispatch();
+
+    const handleSignout = () => {
+        dispatch(clearAuth());
+        toast.info('You are logged out!');
+    }
+
     return(
         <>
         <NavbarContainer isOpen = {props.isOpen}>
@@ -76,25 +93,49 @@ function NavbarMenu(props){
         />
         <Menu>
                 <MenuItem>
-                  <Link to = '/Feed' style={{color : '#95a5a6'}}>
-                  <FaHome  style = {{ fontSize : '28px'}}/>
-                  </Link>
-                  <p>Feed</p>
+                  <div>
+                    <FaHome/>
+                  </div>
+                  <div>
+                    <Link 
+                     to = '/Feed' 
+                     style={{color : '#000', textDecoration: 'none',fontSize: '16px', fontWeight: 'bold'}}
+                     >
+                     Feeds
+                    </Link>
+                  </div>
                 </MenuItem>
+
                 <MenuItem>
-                  <Link to = '/MyNetwork' style={{color : '#95a5a6'}}>
+                  <div>
                   <FaUsers/>
+                  </div>
+                  <div>
+                  <Link to = '/MyNetwork' style={{color : '#000',textDecoration: 'none',fontSize: '16px', fontWeight: 'bold'}}>
+                  My Network
                   </Link>
+                  </div>
                 </MenuItem>
+
+
                 <MenuItem>
-                  <Link to = '/Chats' style={{color : '#95a5a6'}}>
+                  <div>
                   <FaCommentAlt/>
+                  </div>
+                  <div>
+                  <Link to = '/Chats' style={{color : '#000',textDecoration: 'none',fontSize: '16px',fontWeight: 'bold'}}>
+                  
+                  Chats
                   </Link>
+                  </div>
                 </MenuItem>
+
+
                 <MenuItem>
-                  <FaUserCircle style={{color : '#95a5a6'}}/>
+                  <FaSignOutAlt/>
+                  <span style={{fontWeight: 'bold'}} onClick = {handleSignout}>Logout</span>
                 </MenuItem>
-                </Menu>
+        </Menu>
         </NavbarContainer>
         </>
     )

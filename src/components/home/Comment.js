@@ -9,6 +9,7 @@ const CommentContainer = styled.div`
     font-size : 13px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 4px 15px 0px;
     border-radius : 10px;
+    background-color : #fff;
 `;
 
 function Comment(props) {
