@@ -1,4 +1,4 @@
-import { FETCH_POSTS_ERROR, FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS } from "../constant/actionTypes";
+import { DISLIKE_POST, FETCH_POSTS_ERROR, FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, LIKE_POST } from "../constant/actionTypes";
 
 const initialState = {
     posts : [],
@@ -23,6 +23,40 @@ function postReducer(state=initialState, action){
                 ...state,
                 isLoading : false
             }
+        case LIKE_POST:
+            return {
+                ...state,
+                posts : state.posts.map((post) => (
+                    post.id === action.payload.postId 
+                    ?
+                    {
+                        ...post,
+                        userLikeList : [...post.userLikeList,action.payload.userId],
+                        likesCount : post.likesCount + 1
+                    }
+                    :
+                    {
+                        ...post
+                    }
+                ))
+            }
+            case DISLIKE_POST:
+                return {
+                    ...state,
+                    posts : state.posts.map((post) => (
+                        post.id === action.payload.postId 
+                        ?
+                        {
+                            ...post,
+                            userLikeList : post.userLikeList.filter((user) => user !== action.payload.userId),
+                            likesCount : post.likesCount - 1
+                        }
+                        :
+                        {
+                            ...post
+                        }
+                    ))
+                }
         default:
             return {
                 ...state
