@@ -1,23 +1,23 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaCommentAlt,FaHome, FaUserCircle, FaUsers } from 'react-icons/fa';
+import { FaCommentAlt,FaHome, FaUbuntu, FaUserCircle, FaUsers } from 'react-icons/fa';
+import { MdOutlineDangerous } from 'react-icons/md';
+import { AiOutlineMenu } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { Container , Row , Col } from 'react-bootstrap';
+import { Container , Row , Col} from 'react-bootstrap';
 
 export const Navigation = styled.div`
-    background-color : #3a539b;
+    background-color : #fff;
     display : flex;
-    height : 45px;
-    color : white;
+    height : 50px;
     flex-direction : row;
     align-items : center;
-    position : 'fixed';
-    top: 0;
-    left : 0;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position : 'fixed'
 `;
 
 const Content = styled.div`
-    margin : 0 auto;
+    margin : 0
     width : 100%;
     display: flex;
     flex-direction: row;
@@ -25,64 +25,117 @@ const Content = styled.div`
     align-items : center;
 `;
 
-const Brand = styled.h5`
-    color : 'white';
+const Brand = styled.h6`
+    color : 'black';
+    font-size : 18px;
+    font-weight : 600;
+    line-height : 50px;
+    padding-right : 20px;
 `;
 
 const Menu = styled.div`
-    color : 'white';
+    color : '#cecece';
     display : flex ;
+    flex-direction : column;
 `;
 
 const MenuItem = styled.div`
-    color : 'white';
-    padding : 0px 20px;
+    padding-left : 8px;
     display : flex;
-    font-size : 18px;
-    flex-direction : column;
     cursor : pointer;
+    display : flex;
+    flex-direction : row;
+    color : '#95a5a6';
+`;
+
+
+const NavbarContainer = styled.div.attrs(props => ({
+  }))`
+    width : 200px;
+    height : 100vh;
+    background : #fff;
+    display : flex;
+    flex-direction : column;
+    position : fixed;
+    top : 0; 
+    right : ${props => (props.isOpen ? "0" : "-200px")};
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: all 0.5s ease 0s;
+    -webkit-transition: all 0.5s ease 0s;
 `;
 
 
 
-function Navbar(){
+function NavbarMenu(props){
     return(
-        <Navigation>
-            <Container>
-            <Row>
-                <Col lg = {1}></Col>
-                <Col lg = {10}>
-                <Content>
-            <Brand>TeenagersForum</Brand>
-            <Menu>
+        <>
+        <NavbarContainer isOpen = {props.isOpen}>
+        <MdOutlineDangerous 
+           style = {{ fontSize : '50px', padding : '10px 10px', cursor: 'pointer'}}
+           onClick = {props.handleSidebar}   
+        />
+        <Menu>
                 <MenuItem>
-                  <Link to = '/Feed' style={{color : 'white'}}>
-                  <FaHome/>
+                  <Link to = '/Feed' style={{color : '#95a5a6'}}>
+                  <FaHome  style = {{ fontSize : '28px'}}/>
                   </Link>
+                  <p>Feed</p>
                 </MenuItem>
                 <MenuItem>
-                  <Link to = '/MyNetwork' style={{color : 'white'}}>
+                  <Link to = '/MyNetwork' style={{color : '#95a5a6'}}>
                   <FaUsers/>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link to = '/Chats' style={{color : 'white'}}>
+                  <Link to = '/Chats' style={{color : '#95a5a6'}}>
                   <FaCommentAlt/>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link to = '/Profile' style={{color : 'white'}}>
-                  <FaUserCircle/>
-                  </Link>
+                  <FaUserCircle style={{color : '#95a5a6'}}/>
                 </MenuItem>
-            </Menu>
-            </Content>
+                </Menu>
+        </NavbarContainer>
+        </>
+    )
+}
+
+function Navbar(){
+
+    const [isOpen, setOpen] = React.useState(false);
+    const handleSidebar = () => {
+        if(isOpen){
+            setOpen(false);
+        }
+        else{
+            setOpen(true);
+        }
+    }
+
+    return(
+        <>
+        <Navigation>
+            <Container>
+            <Row>
+                <Col lg = {1}/>
+                <Col lg = {10} xs = {12}>
+                <Content>
+                <Brand>
+                Ubuntu
+                <span><FaUbuntu/></span>
+                </Brand>
+                <AiOutlineMenu 
+                  onClick = {handleSidebar}
+                  style = {{ fontSize : '26px', cursor : 'pointer'}}
+                  />
+                </Content>
                 </Col>
-                <Col lg = {1}></Col>
+                <Col lg = {1}/>
             </Row>
-            
             </Container>
         </Navigation>
+        <NavbarMenu isOpen = {isOpen} handleSidebar = {handleSidebar}/>
+        </>
     )
 }
 
