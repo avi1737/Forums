@@ -42,4 +42,23 @@ export const fetch_comments_error = (error) => {
   };
 };
 
+export const like_post = (postId,userId) => {
+  return {
+    type: "LIKE_POST",
+    payload : {
+      postId,
+      userId
+    }
+  }
+}
+
+export const dislike_post = (postId,userId) => {
+  return {
+    type: "DISLIKE_POST",
+    payload : {
+      postId,
+      userId
+    }
+  }
+}
 

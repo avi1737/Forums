@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import { Col, Container,Row } from 'react-bootstrap';
 import styled from 'styled-components'
-import { AiOutlineLike , AiOutlineComment, AiOutlineShareAlt} from 'react-icons/ai';
+import { AiOutlineLike , AiOutlineComment, AiOutlineShareAlt, AiTwotoneLike} from 'react-icons/ai';
 import CommentList from './CommentList';
+import { useDispatch, useSelector } from 'react-redux';
+import { callLikePost } from '../../Graphs/Post/LikePost';
+import { toast } from 'react-toastify';
+import { dislike_post, like_post } from '../../actions/posts';
+import { callDislikePost } from '../../Graphs/Post/DislikePost';
 
 const PostContainer = styled.div`
     width : 100%;
@@ -44,7 +49,7 @@ export const ProfileImage = styled.img.attrs(props => ({
 function Post(props) {
 
     const [isOpen, setOpen] = useState(false);
-    const {content,commentsCount,likesCount,id} = props.data;
+    const {content,commentsCount,likesCount,id,userLikeList} = props.data;
 
     function openComments(){
         if(isOpen){
@@ -79,7 +84,12 @@ function Post(props) {
             </Row>
 
             <Row>
-                <LikeComment likesCount = {likesCount} commentsCount = {commentsCount} openComments = {openComments}/>
+                <LikeComment 
+                postId = {id} 
+                likesCount = {likesCount} 
+                commentsCount = {commentsCount} 
+                userLikeList = {userLikeList}
+                openComments = {openComments}/>
             </Row>
 
             {
@@ -94,23 +104,71 @@ function Post(props) {
 //Like comment Component bar
 
 export const LikeComment = (props) => {
-    const {likesCount , commentsCount} = props;
+    const {likesCount , commentsCount , postId, userLikeList} = props;
+    const userId = useSelector((state) => state.loginReducer.user.id);
+    const authToken = useSelector((state) => state.loginReducer.token);
+    const dispatch = useDispatch();
+
+    const likePost = async() => {
+        try{
+            const likeData = await callLikePost(authToken,postId,userId)
+            if(likeData.message === 'Success'){
+                toast.info('you liked this post');
+                dispatch(like_post(postId,userId));
+            }
+        }
+        catch(err){
+            toast.info('There was a problem in liking the post');
+        }
+    }
+
+
+    const dislikePost = async() => {
+        try{
+            const dislikeData = await callDislikePost(authToken,postId,userId)
+            if(dislikeData.message === 'Success'){
+                dispatch(dislike_post(postId,userId));
+            }
+        }
+        catch(err){
+            toast.info('There was a problem in liking the post');
+        }
+    }
+
     return(
         <>
-        <Col lg = {12} className="mt-4">
+        <Row>
+        <Col lg = {4} className="mt-4">
+
             { likesCount }
-            <AiOutlineLike
-             style = {{fontSize : '24px', margin: '0px 30px', cursor:'pointer'}}
-            />
+            {
+                userLikeList.includes(userId) ?
+                <AiTwotoneLike
+                 onClick = {dislikePost}
+                 style = {{fontSize : '24px',margin: '0px 30px', cursor:'pointer'}}
+                />
+                :
+                <AiOutlineLike
+                 onClick = {likePost}
+                 style = {{fontSize : '24px', margin: '0px 30px',cursor:'pointer'}}
+                />
+            }
+        </Col>
+
+        <Col lg = {4} className="mt-4">
             { commentsCount }
             <AiOutlineComment
             onClick = {() => props.openComments()}
             style = {{fontSize : '24px', margin: '0px 30px', cursor:'pointer'}}
             />
+        </Col>
+
+        <Col lg = {4} className="mt-4">
             <AiOutlineShareAlt
             style = {{fontSize : '24px', margin: '0px 30px', cursor:'pointer'}}
             />
         </Col>
+        </Row>
         </>
     )
 }
