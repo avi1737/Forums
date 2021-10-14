@@ -18,6 +18,8 @@ const Router = () => {
        <HomeLayout>
         <ProtectedRoute path = "/Feed" component = {Feed} />
         <ProtectedRoute path = "/MyNetwork" component = {MyNetwork} />
+        <ProtectedRoute path = "/Chats" component = {MyNetwork} />
+        <ProtectedRoute path = "/Profile" component = {MyNetwork} />
        </HomeLayout>
        
      </Switch>

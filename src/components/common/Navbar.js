@@ -8,11 +8,12 @@ import { Container , Row , Col} from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { clearAuth } from '../../actions/auth';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router';
 
 export const Navigation = styled.div`
     background-color : #fff;
     display : flex;
-    height : 50px;
+    height : 60px;
     flex-direction : row;
     align-items : center;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -78,10 +79,13 @@ const NavbarContainer = styled.div.attrs(props => ({
 function NavbarMenu(props){
 
     const dispatch = useDispatch();
+    const history = useHistory();
+
 
     const handleSignout = () => {
         dispatch(clearAuth());
         toast.info('You are logged out!');
+        history.push(`${process.env.PUBLIC_URL}/Login`);
     }
 
     return(

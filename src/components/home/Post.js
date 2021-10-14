@@ -23,7 +23,7 @@ const PostContent = styled.div`
     font-weight : 'bold';
 `;
 
-const CreatorProfile = styled.div`
+export const CreatorProfile = styled.div`
     width : 70px;
     height : 70px;
 `;
@@ -33,7 +33,7 @@ const CreatorProfileUsername = styled.h5`
     font-weight : bold;
 `;
 
-const ProfileImage = styled.img.attrs(props => ({
+export const ProfileImage = styled.img.attrs(props => ({
     src: props.url
   }))`
    width : 40px;

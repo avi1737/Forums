@@ -2,15 +2,24 @@ import { createStore, applyMiddleware, compose } from "redux";
 // middlewares
 import thunkMiddleware from "redux-thunk";
 import logger from "redux-logger";
-import { loadState, saveState } from "./localstorage";
 // Import custom components
 import reducers from "../reducers/index";
 
-let persistedState = loadState();
+//Redux persist
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'authType',
+  storage: storage,
+  whitelist: ['loginReducer'] // which reducer want to store
+};
+const pReducer = persistReducer(persistConfig, reducers);
+
+//let persistedState = loadState();
 
 const store = createStore(
-  reducers,
-  persistedState,
+  pReducer,
   compose(
     applyMiddleware(thunkMiddleware, logger),
 
@@ -23,10 +32,13 @@ const store = createStore(
   )
 );
 
-store.subscribe(() => {
-  const state = store.getState();
-  console.log(state);
-  saveState(state);
-});
+// store.subscribe(() => {
+//   const state = store.getState();
+//   console.log(state);
+//   saveState(state);
+// });
 
-export default store;
+// export default store;
+
+const persistor = persistStore(store);
+export { persistor, store };
