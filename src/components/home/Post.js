@@ -16,9 +16,8 @@ const PostContainer = styled.div`
     margin : 12px;
     font-size : 13px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border-radius : 20px 10px 0px 20px;
-    background-color : dodgerblue;
-    color : #fff;
+    background-color : #fff;
+    color : #000;
 `;
 
 const PostContent = styled.div`
@@ -138,7 +137,7 @@ export const LikeComment = (props) => {
     return(
         <>
         <Row>
-        <Col lg = {4} className="mt-4">
+        <Col lg = {4} xs = {4} className="mt-4">
 
             { likesCount }
             {
@@ -155,7 +154,7 @@ export const LikeComment = (props) => {
             }
         </Col>
 
-        <Col lg = {4} className="mt-4">
+        <Col lg = {4} xs = {4} className="mt-4">
             { commentsCount }
             <AiOutlineComment
             onClick = {() => props.openComments()}
@@ -163,7 +162,7 @@ export const LikeComment = (props) => {
             />
         </Col>
 
-        <Col lg = {4} className="mt-4">
+        <Col lg = {4} xs = {4} className="mt-4">
             <AiOutlineShareAlt
             style = {{fontSize : '24px', margin: '0px 30px', cursor:'pointer'}}
             />

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaCommentAlt,FaHome, FaSignOutAlt, FaUbuntu, FaUsers } from 'react-icons/fa';
+import { FaCommentAlt,FaHome, FaSignOutAlt, FaUsers } from 'react-icons/fa';
 import { MdOutlineDangerous } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -166,8 +166,7 @@ function Navbar(){
                 <Col lg = {10} xs = {12}>
                 <Content>
                 <Brand>
-                Ubuntu
-                <span><FaUbuntu/></span>
+                Bumble
                 </Brand>
                 <AiOutlineMenu 
                   onClick = {handleSidebar}

@@ -1,4 +1,4 @@
-import { DISLIKE_POST, FETCH_POSTS_ERROR, FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, LIKE_POST } from "../constant/actionTypes";
+import { ADD_POST, DISLIKE_POST, FETCH_POSTS_ERROR, FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, LIKE_POST } from "../constant/actionTypes";
 
 const initialState = {
     posts : [],
@@ -22,6 +22,11 @@ function postReducer(state=initialState, action){
             return {
                 ...state,
                 isLoading : false
+            }
+        case ADD_POST:
+            return {
+                ...state,
+                posts : [action.payload,...state.posts]
             }
         case LIKE_POST:
             return {

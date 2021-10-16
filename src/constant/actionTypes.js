@@ -14,6 +14,7 @@ export const FETCH_COMMENT_ERROR = "FETCH_COMMENT_ERROR";
 
 export const LIKE_POST = "LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
+export const ADD_POST = "ADD_POST";
 
 
 
