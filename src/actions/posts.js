@@ -42,6 +42,13 @@ export const fetch_comments_error = (error) => {
   };
 };
 
+export const add_post = (post) => {
+  return {
+    type: "ADD_POST",
+    payload : post
+  }
+}
+
 export const like_post = (postId,userId) => {
   return {
     type: "LIKE_POST",
