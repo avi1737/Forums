@@ -1,4 +1,4 @@
-import { ADD_POST, DISLIKE_POST, FETCH_POSTS_ERROR, FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, LIKE_POST } from "../constant/actionTypes";
+import { ADD_POST, DELETE_POST, DISLIKE_POST, EDIT_POST, FETCH_POSTS_ERROR, FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, LIKE_POST } from "../constant/actionTypes";
 
 const initialState = {
     posts : [],
@@ -27,6 +27,23 @@ function postReducer(state=initialState, action){
             return {
                 ...state,
                 posts : [action.payload,...state.posts]
+            }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts : state.posts.filter((post) => post.id !== action.payload)
+            }
+        case EDIT_POST:
+            return {
+                ...state,
+                posts : state.posts.map((post) => {
+                    if( post.id === action.payload.id){
+                        return action.payload;
+                    }
+                    else {
+                        return post;
+                    }
+                })
             }
         case LIKE_POST:
             return {

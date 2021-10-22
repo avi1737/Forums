@@ -9,11 +9,11 @@ import { callLogin } from '../../Graphs/Auth/Login';
 import { validateEmail } from '../../utils/authHelper';
 
 export const Head = styled.div`
-    background-color : #4b77be;
+    background-color : white;
     width : 320px;
     height : auto;
     border-radius : 8px;
-    color : white;
+    color : black;
     align-items : center;
     padding : 8px;
     justify-content : center;
@@ -23,7 +23,7 @@ export const Head = styled.div`
 `;
 
 export const Card = styled.div`
-    background-color : #3a539b;
+    background-color : white;
     display : flex;
     width : 320px;
     height : auto;
@@ -67,7 +67,7 @@ export const Input = styled.input`
     outline: 0;
     border-radius: 4px;
     text-align: left;
-    background-color: #fff;
+    background-color: #ccc;
 `;
 
 export default function LoginForm() {
@@ -122,7 +122,7 @@ export default function LoginForm() {
          <Input type="password" placeholder="password" onChange = {(e) => setPassword(e.target.value)}/>
          <SignInButton onClick= {() => handleLogin()} text = {buttontext} disabled={buttonStatus}/>
      </Card>
-     <Head>Dont have an account ? <Link to ='/Register' style={{color : 'white' , fontWeight: 'bold'}}>Sign up here</Link></Head>
+     <Head>Dont have an account ? <Link to ='/Register' style={{color : 'black' , fontWeight: 'bold'}}>Sign up here</Link></Head>
      </>
     )
 }

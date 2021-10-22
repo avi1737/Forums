@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetch_posts_error, fetch_posts_request, fetch_posts_success } from '../../actions/posts';
 import { callFeeds } from '../../Graphs/Post/Feeds';
-import Loader from '../common/Loader';
+import Loader, { CenterLoader } from '../common/Loader';
 import Post from './Post'
 
 function PostList() {
@@ -28,13 +28,13 @@ function PostList() {
     },[dispatch,authToken]);
 
     return (
-        <div>
+        <div className='mt-4'>
             {
                 isLoading ?
                 <>
-                <Loader/>
-                <Loader/>
-                <Loader/>
+                  <CenterLoader>
+                    <Loader/>
+                  </CenterLoader>
                 </>
                 :
                 posts.length > 0 && posts.map((post) => (

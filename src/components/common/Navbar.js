@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaCommentAlt,FaHome, FaSignOutAlt, FaUsers } from 'react-icons/fa';
-import { MdOutlineDangerous } from 'react-icons/md';
-import { AiOutlineMenu } from 'react-icons/ai';
+import { BsBell } from 'react-icons/bs';
+import { IoIosPeople, IoIosSettings } from 'react-icons/io'
+import { BsChatSquareDots } from 'react-icons/bs'
+
 import { Link } from 'react-router-dom';
 import { Container , Row , Col} from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
@@ -10,13 +11,17 @@ import { clearAuth } from '../../actions/auth';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 
+import { GrEdit, GrHomeRounded } from 'react-icons/gr';
+import { FiLogOut } from 'react-icons/fi';
+import { ProfileImage } from '../home/Post';
+
 export const Navigation = styled.div`
     background-color : #fff;
     display : flex;
-    height : 60px;
+    height : 55px;
     flex-direction : row;
     align-items : center;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
     position : sticky;
     top : 0;
 `;
@@ -30,57 +35,86 @@ const Content = styled.div`
     align-items : center;
 `;
 
-const Brand = styled.h6`
-    color : 'black';
+const CreatorProfile = styled.div`
+    width : 30px;
+    height : 30px;
+    position : relative;
+    cursor : pointer;
+`;
+
+const Brand = styled.h4`
+    color : 'dodgerblue';
     font-size : 18px;
     font-weight : 600;
-    line-height : 50px;
-    padding-right : 20px;
+    width : 50%;
 `;
 
-const Menu = styled.ul`
+const DropdownMenu = styled.div`
+   width : 120px;
+   height : auto;
+   min-height : 100px;
+   background : white;
+   position : absolute;
+   top : 50px;
+   left : -70px;
+   border-radius : 4px;
+   padding : 8px;
+   box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
+
+   @media only screen and (max-width: 728px) {
+    left : -90px;
+  }
+`;
+
+const DropdownUL = styled.div`
    list-style : none;
+   
+`;
+
+const DropdownLI = styled.li`
    width : 100%;
+   font-size : 14px;
+   padding : 4px 0px;
+   display : flex;
+   justify-content : space-around;
+   align-items : center;
+   background-color : #e8ecf1;
+   border-radius : 4px;
+   margin : 4px 0;
 `;
 
 
-const MenuItem = styled.li`
-    margin : 10px 0px;
-    cursor : pointer;
-    color : '#95a5a6';
-    font-size : '18px';
-    text-decoration : none;
+
+// for the new navbar
+
+const MenuContainer = styled.div`
     display : flex;
-    justify-content: space-between;
     align-items : center;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 2px 3px 0px;
-    padding : 0px 20px;
+    flex : 1fr 1fr 1fr 1fr 1fr;
+    width : 50%;
 `;
 
-
-const NavbarContainer = styled.div.attrs(props => ({
-  }))`
-    width : 250px;
-    height : 100vh;
-    background : #fff;
-    display : flex;
-    flex-direction : column;
-    position : fixed;
-    top : 0; 
-    right : ${props => (props.isOpen ? "0" : "-250px")};
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    transition: all 0.5s ease 0s;
-    -webkit-transition: all 0.5s ease 0s;
-
+const Menu = styled.div`
+    width : 100%;
+    font-size : 22px;
 `;
 
 
 
-function NavbarMenu(props){
+function Navbar(){
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const [isOpen , setOpen] = React.useState(false);
 
+    function handleOpenMenu(){
+      if(isOpen){
+        setOpen(false);
+      }
+      else{
+        setOpen(true);
+      }
+    }
 
     const handleSignout = () => {
         dispatch(clearAuth());
@@ -90,97 +124,91 @@ function NavbarMenu(props){
 
     return(
         <>
-        <NavbarContainer isOpen = {props.isOpen}>
-        <MdOutlineDangerous 
-           style = {{ fontSize : '50px', padding : '10px 10px', cursor: 'pointer'}}
-           onClick = {props.handleSidebar}   
-        />
-        <Menu>
-                <MenuItem>
-                  <div>
-                    <FaHome/>
-                  </div>
-                  <div>
-                    <Link 
-                     to = '/Feed' 
-                     style={{color : '#000', textDecoration: 'none',fontSize: '16px', fontWeight: 'bold'}}
-                     >
-                     Feeds
-                    </Link>
-                  </div>
-                </MenuItem>
-
-                <MenuItem>
-                  <div>
-                  <FaUsers/>
-                  </div>
-                  <div>
-                  <Link to = '/MyNetwork' style={{color : '#000',textDecoration: 'none',fontSize: '16px', fontWeight: 'bold'}}>
-                  My Network
-                  </Link>
-                  </div>
-                </MenuItem>
-
-
-                <MenuItem>
-                  <div>
-                  <FaCommentAlt/>
-                  </div>
-                  <div>
-                  <Link to = '/Chats' style={{color : '#000',textDecoration: 'none',fontSize: '16px',fontWeight: 'bold'}}>
-                  
-                  Chats
-                  </Link>
-                  </div>
-                </MenuItem>
-
-
-                <MenuItem>
-                  <FaSignOutAlt/>
-                  <span style={{fontWeight: 'bold'}} onClick = {handleSignout}>Logout</span>
-                </MenuItem>
-        </Menu>
-        </NavbarContainer>
-        </>
-    )
-}
-
-function Navbar(){
-
-    const [isOpen, setOpen] = React.useState(false);
-    const handleSidebar = () => {
-        if(isOpen){
-            setOpen(false);
-        }
-        else{
-            setOpen(true);
-        }
-    }
-
-    return(
-        <>
         <Navigation>
             <Container>
             <Row>
                 <Col lg = {1}/>
-                <Col lg = {10} xs = {12}>
-                <Content>
-                <Brand>
-                Bumble
-                </Brand>
-                <AiOutlineMenu 
-                  onClick = {handleSidebar}
-                  style = {{ fontSize : '26px', cursor : 'pointer'}}
-                  />
-                </Content>
-                </Col>
+                 <Col lg = {10}>
+                  <Content>
+                   <div>
+                    <Brand>
+                      okCupid
+                    </Brand>
+                   </div> 
+                   
+                   <MenuContainer>
+                     
+                     <Menu>
+                       <Link to = '/Feed'> 
+                        <GrHomeRounded/>
+                       </Link>
+                     </Menu>
+                     
+
+                     <Menu>
+                       <Link to = "/Notification">
+                       <BsBell/>
+                       </Link>
+                     </Menu>
+
+                     <Menu>
+                       <Link to = '/MyNetwork'>
+                       <IoIosPeople/>
+                       </Link>
+                     </Menu>
+
+                     <Menu>
+                       <Link to = '/Chats'>
+                       <BsChatSquareDots/>
+                       </Link>
+                     </Menu>
+
+                     <Menu>
+                        <CreatorProfile onClick = {handleOpenMenu}>
+                        <ProfileImage 
+                        url = "http://res.cloudinary.com/dh9al6qks/image/upload/v1634477233/gjmp1ktataouy3w7psir.jpg" />
+                        {
+                          isOpen &&
+                         <DropdownMenu>
+                           <DropdownUL>
+
+                             <Link to = '/Profile' style = {{ textDecoration : 'none' , color : 'black'}}>
+                             <DropdownLI>
+                               <GrEdit/>
+                               Profile
+                             </DropdownLI>
+                             </Link>
+
+                             <Link to = '/Settings' style = {{ textDecoration : 'none' , color : 'black'}}>
+                             <DropdownLI>
+                               <IoIosSettings/>
+                               Settings
+                               </DropdownLI>
+                             </Link>
+
+                             <DropdownLI onClick = {handleSignout}>
+                               <FiLogOut/>
+                               Log out
+                             </DropdownLI>
+
+                           </DropdownUL>
+                         </DropdownMenu>
+                         }
+                       </CreatorProfile>
+                     </Menu>
+
+                   </MenuContainer>
+
+                  </Content>
+                 </Col>
                 <Col lg = {1}/>
             </Row>
             </Container>
         </Navigation>
-        <NavbarMenu isOpen = {isOpen} handleSidebar = {handleSidebar}/>
         </>
     )
 }
+
+//{/* <NavbarMenu isOpen = {isOpen} handleSidebar = {handleSidebar}/> */}
 
 export default Navbar;

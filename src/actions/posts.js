@@ -49,6 +49,20 @@ export const add_post = (post) => {
   }
 }
 
+export const delete_post = (id) => {
+  return {
+    type: "DELETE_POST",
+    payload : parseInt(id)
+  }
+}
+
+export const edit_post = (post) => {
+  return {
+    type: "EDIT_POST",
+    payload : post
+  }
+}
+
 export const like_post = (postId,userId) => {
   return {
     type: "LIKE_POST",

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { fetch_comments_error, fetch_comments_request, fetch_comments_success} from '../../actions/posts';
@@ -7,9 +6,10 @@ import { callComments } from '../../Graphs/Post/Comments';
 import Comment from './Comment';
 
 
-const loadMoreButton = styled.p`
+const LoadMoreButton = styled.button`
    textDecoration : 'underline';
    color : 'dodgerblue';
+   fontSize : '20px';
 `;
 
 function CommentList(props) {
@@ -19,15 +19,13 @@ function CommentList(props) {
     const [page, setPage] = useState(1);
     const authToken = useSelector((state) => state.loginReducer.token);
     const comments = useSelector((state) => state.commentReducer.comments);
-
-    console.log("COmment in list", comments);
     const isLoading = useSelector((state) => state.commentReducer.isLoading);
 
     useEffect(() => {
         async function fetch_comments(){
             try{
                 dispatch(fetch_comments_request());
-                const commentData = await callComments(authToken,postId,page);
+                const commentData = await callComments(authToken,postId,1);
                 dispatch(fetch_comments_success(commentData.data));
             }
             catch(err){
@@ -35,15 +33,15 @@ function CommentList(props) {
             }
         }
        fetch_comments();
-    },[dispatch,page,authToken,postId]);
+    },[dispatch,authToken,postId]);
 
 
     return (
-        <div>
+        <div className='mt-4'>
             {
                 isLoading ?
                 <>
-                <Spinner/>
+                Loading more comments...
                 </>
                 :
                 <>
@@ -52,7 +50,7 @@ function CommentList(props) {
                     <Comment data={comment}/>
                 ))
                 }
-                <loadMoreButton onClick = {() => setPage(page+1)}>load more..</loadMoreButton>
+                <LoadMoreButton onClick = {() => setPage(page+1)}>load more..</LoadMoreButton>
                 </>
             }
         </div>
