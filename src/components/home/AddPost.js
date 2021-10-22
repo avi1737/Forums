@@ -9,16 +9,16 @@ import { add_post } from '../../actions/posts';
 
 
 const AddPostContainer = styled.div`
-    width : 95%;
+    width : 98%;
     margin : 0px auto;
     height : 100px;
     border-radius : 4px;
-    background : 'white';
+    background : #fff;
     padding : 10px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 `;
 
-const AddPostInput = styled.textarea`
+export const AddPostInput = styled.textarea`
     width : 100%;
     height : 60px;
     border : 1px solid #c1c1c1;
@@ -68,6 +68,7 @@ function AddPost() {
     const authToken = useSelector((state) => state.loginReducer.token);
     const userId = useSelector((state) => state.loginReducer.user.id);
     const [content , setContent] = useState('');
+    const [buttonText , setButtonText] = useState('Post');
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -75,17 +76,19 @@ function AddPost() {
 
     const handleAddPost = async() => {
         try{
+            setButtonText('Posting...');
             const addPostData = await callAddPost(authToken,userId,content);
-            console.log(addPostData);
             if(addPostData.status === 200){
-                console.log(addPostData);
                 handleClose();
                 toast.success('Posted Successfully');
+                console.log(addPostData);
                 dispatch(add_post(addPostData.post));
+                setButtonText('Post');
             }
         }
         catch(err){
             toast.error('There was a problem Adding Post!');
+            setButtonText('Post');
         }
     }
 
@@ -110,7 +113,7 @@ function AddPost() {
               Close
             </Button>
             <Button variant="primary" onClick={handleAddPost}>
-              Post
+              {buttonText}
             </Button>
           </Modal.Footer>
 

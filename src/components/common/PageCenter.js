@@ -8,7 +8,7 @@ const CenterDiv = styled.div`
     width: 100%;
     flex-direction : column;
     height: 100vh;
-    background-color: #3a539b;
+    background-color: dodgerblue;
 `;
 
 export default function PageCenter(props) {

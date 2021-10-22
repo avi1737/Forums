@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export function validateEmail(email){
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -17,4 +19,8 @@ export function validateInputs(firstName, lastName, email , errors){
     else{
         return false;
     }
+}
+
+export function getTimeAgo(dateTime){
+    return moment(dateTime).fromNow();
 }

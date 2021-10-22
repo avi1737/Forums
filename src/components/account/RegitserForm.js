@@ -148,7 +148,7 @@ export default function RegisterForm() {
           
          <SignUpButton onClick={() => handleRegister()} text={buttontext} disabled = {buttonStatus}/>
      </Card>
-     <Head>Already have an account ? <Link to ='/Login' style={{color : 'white' , fontWeight: 'bold'}}>Login here</Link></Head>
+     <Head>Already have an account ? <Link to ='/Login' style={{color : 'black' , fontWeight: 'bold'}}>Login here</Link></Head>
      </>
     )
 }
