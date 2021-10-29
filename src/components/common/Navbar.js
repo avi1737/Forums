@@ -50,19 +50,20 @@ const Brand = styled.h4`
 `;
 
 const DropdownMenu = styled.div`
-   width : 120px;
+   width : 200px;
    height : auto;
    min-height : 100px;
    background : white;
    position : absolute;
    top : 50px;
-   left : -70px;
+   left : -100px;
    border-radius : 4px;
    padding : 8px;
    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
 
    @media only screen and (max-width: 728px) {
-    left : -90px;
+    left : -120px;
+    width : 160px;
   }
 `;
 
@@ -78,7 +79,6 @@ const DropdownLI = styled.li`
    display : flex;
    justify-content : space-around;
    align-items : center;
-   background-color : #e8ecf1;
    border-radius : 4px;
    margin : 4px 0;
 `;
@@ -175,7 +175,7 @@ function Navbar(){
                              <Link to = '/Profile' style = {{ textDecoration : 'none' , color : 'black'}}>
                              <DropdownLI>
                                <GrEdit/>
-                               Profile
+                               Account
                              </DropdownLI>
                              </Link>
 

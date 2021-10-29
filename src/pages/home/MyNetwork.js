@@ -2,6 +2,7 @@ import React from 'react'
 import { Container , Row , Col } from 'react-bootstrap'
 import { Route, useRouteMatch } from 'react-router';
 import MyConnectionSummary from '../../components/home/MyConnectionSummary';
+import FollowersList from '../../components/Network/FollowersList';
 
 
 function MyNetwork() {
@@ -12,27 +13,23 @@ function MyNetwork() {
         <Container className='mt-4'>
             <Row mt={5}>
                 <Col lg = {1}></Col>
-                <Col lg = {3} sm={12}>
+                <Col lg = {3} sm={11} xs = {12}>
                     <MyConnectionSummary urls = {url}/>
                 </Col>
-                <Col lg = {6} sm={12}>
+                <Col lg = {6} sm={11} xs = {12}>
                     <Route path = {`${path}/followers`}>
-                        <h1>followers</h1>
+                        <FollowersList/>
                     </Route>
-                    <Route path = {`${path}/followings`}>
+                    <Route path = {`${path}/following`}>
                         <h1>followings</h1>
                     </Route>
-                    <Route path = {`${path}/myConnections`}>
-                        <h1>myConnections</h1>
+                    <Route path = {`${path}/requestSent`}>
+                        <h1>request Sent</h1>
                     </Route>
-                    <Route path = {`${path}/followers`}>
-                        <h1>followers</h1>
-                    </Route>
-                    <Route path = {`${path}/followers`}>
-                        <h1>followers</h1>
+                    <Route path = {`${path}/connectionRequest`}>
+                        <h1>connection Request</h1>
                     </Route>
                 </Col>
-                <Col lg = {2}></Col>
             </Row>
         </Container>
     )

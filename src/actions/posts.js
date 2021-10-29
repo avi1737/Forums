@@ -1,3 +1,4 @@
+import { ACTIVATE_POSTS } from "../constant/actionTypes";
 
 export const fetch_posts_success = (payload) => {
     return {
@@ -80,6 +81,13 @@ export const dislike_post = (postId,userId) => {
       postId,
       userId
     }
+  }
+}
+
+export const active_posts = () => {
+  return {
+    type : ACTIVATE_POSTS,
+    payload : {}
   }
 }
 
