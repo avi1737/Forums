@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button';
 
@@ -79,10 +79,9 @@ const ProfileTabItem = styled.div`
 
 function ProfileTop() {
 
-    const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const [buttonText, setButtonText] = useState('Save');
+    // [buttonText, setButtonText] = useState('Save');
     const { profile_image , firstName , lastName , email} = useSelector((state) => state.loginReducer.user);
 
 
@@ -129,7 +128,7 @@ function ProfileTop() {
               Close
             </Button>
             <Button variant="primary">
-              {buttonText}
+              Save
             </Button>
           </Modal.Footer>
         </Modal>
